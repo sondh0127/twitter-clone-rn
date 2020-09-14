@@ -1,0 +1,28 @@
+schema:
+  - 'https://next-expo-twitter-clone.herokuapp.com/v1/graphql':
+      headers:
+        x-hasura-admin-secret: ${X_HASURA_ADMIN_SECRET}
+documents:
+  - './src/graphql/**/*.graphql'
+config:
+  scalars:
+    DateTime: Date
+    JSON: '{ [key: string]: any }'
+    bigint: number
+    timestamptz: string
+overwrite: true
+generates:
+  ./src/generated/graphql.tsx:
+    plugins:
+      - 'typescript'
+      - 'typescript-operations'
+      - 'typescript-urql'
+    config:
+      withHooks: true
+      withComponent: false
+    hooks:
+      afterOneFileWrite:
+        - prettier --write
+  ./src/graphql.schema.json:
+    plugins:
+      - 'introspection'

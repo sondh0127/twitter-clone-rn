@@ -1,0 +1,9 @@
+query User($from: bigint!, $limit: Int!) {
+  user(limit: $limit, where: { id: { _gt: $from } }) {
+    id
+    name
+    auth0_id
+    created_at
+    last_seen
+  }
+}
